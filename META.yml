@@ -1,10 +1,11 @@
 ---
 name: WWW-Sucksub-Vostfree
-version: 0.01
+version: 0.02
 author: Timothée Foucart <timothee.foucart@apinc.org>
 abstract: ~
 license: perl
 requires:
+  Alias: >=2.3
   Carp: >= 1.0
   DB_File: >= 1.8
   HTML::Parser: >=1.0
@@ -13,5 +14,5 @@ requires:
 provides:
   WWW::Sucksub::Vostfree:
     file: lib/WWW/Sucksub/Vostfree.pm
-    version: 0.01
+    version: 0.02
 generated_by: Module::Build version 0.25

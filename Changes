@@ -3,3 +3,6 @@ Revision history for WWW-Sucksub-Vostfree
 0.01    10/11/2005
         First version, released on an unsuspecting world.
 
+0.02	15/11/2005
+		 * Correct pod doc ( format )
+		 * correct alias.pm depandancies in makefiles

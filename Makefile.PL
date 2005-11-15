@@ -14,6 +14,7 @@ WriteMakefile(
          'DB_File'=> '>= 1.8',
          'Carp' => '>= 1.0',
          'HTML::Parser' => '>=1.0',
+         'Alias' => '>=2.3',
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'WWW-Sucksub-Vostfree-*' },

@@ -5,11 +5,11 @@ WWW::Sucksub::Vostfree - automated access to divxstation.com
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 =head1 SYNOPSIS
 
@@ -136,16 +136,16 @@ Default value is :
 							...
 							logout => \*STDOUT, 
 							...,
-							)
+							);
 
 output and optional debugging info will be produced ont STDOUT
 or any other descriptor if you give filename as arg, by example :
 
-$foo=WWW::Sucksub::Vostfree->new(
-							...
-							logout => '/where/my/log/is/written.txt', 
-							...,
-							)
+	$foo=WWW::Sucksub::Vostfree->new(
+						...
+						logout => '/where/my/log/is/written.txt', 
+						...,
+						);
 
 =head4 dbfile()
 
@@ -213,6 +213,8 @@ return a hash of every couple ( title, http link of subtitle file ) the search o
 =item * L<WWW::Sucksub::Attila>
 
 =item * L<WWW::Sucksub::Divxstation>
+
+=item * L<Alias>
 
 =back
 

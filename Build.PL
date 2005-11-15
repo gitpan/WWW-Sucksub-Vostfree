@@ -13,6 +13,7 @@ my $builder = Module::Build->new(
          'DB_File'=> '>= 1.8',
          'Carp' => '>= 1.0',
          'HTML::Parser' => '>=1.0',
+         'Alias' => '>=2.3',
     },
     add_to_cleanup      => [ 'WWW-Sucksub-Vostfree-*' ],
 );
