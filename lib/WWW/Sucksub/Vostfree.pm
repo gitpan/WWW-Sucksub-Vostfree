@@ -5,11 +5,11 @@ WWW::Sucksub::Vostfree - automated access to vost.free.fr
 
 =head1 VERSION
 
-Version 0.03
+Version 0.04
 
 =cut
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 =head1 SYNOPSIS
 
@@ -269,6 +269,7 @@ sub new{
 	 	bless($self,$classe);
 	 	$self->_init(@_);
 	 	logout($self->{logout});
+	 	
 	 	return $self;
 };
 
@@ -290,6 +291,7 @@ sub _init{
 	$self->{dbfile} = "$ENV{HOME}"."/extratitle_db.db";
 	$self->{dbsearch} = 0;
 	$self->{sstsav} ={};
+ 	$self->{nbres} = 0;
  	#
  	# -- replace forced values
  	#
@@ -374,7 +376,6 @@ sub html {
 sub motif { 
 	my $self =attr shift;
 	if (@_) {$motif=shift;};
-	print "---------------".$motif."------------\n";
 	if ((length($motif))<2)
 		{ 	print $fh "[INFO] motif is : ".$motif." [length = ".length($motif)." ]\n" if $debug;
 			croak "[FATAL WARNING] your search motif should be longer than 2 characters ! \n It's only ".length($motif)." long !\n";
@@ -384,6 +385,7 @@ sub motif {
 sub search{
 	my $self =attr shift; 
 	croak "can not search without motif!\n" unless $motif;
+	motif($motif);#obtain warn eventually
 	our $mech = WWW::Mechanize->new(agent=>$useragent,
 			cookie_jar => HTTP::Cookies->new(
     			file => $cookies_file,
@@ -452,20 +454,20 @@ sub parse_vostfree{ #INTERNAL
 				for (my $lnd=0;$lnd<=$#lnkdl;$lnd++)
 					{ 
 					$sstsav{$lnkdl[$lnd]} = $libelle;
-					if ($lnd>0){$libelle=$sstsav{$dlbase.$lnkdl[$lnd]}."_(".$lnd.")";};
+					if ($lnd>0){$libelle=$sstsav{$lnkdl[$lnd]}."_(".$lnd.")";};
 					if ($html)
 						{ 
-						print HTMLFILE  "<a href=\"".$dlbase.$lnkdl[$lnd]."\">".$libelle."</a><br>\n";
+						print HTMLFILE  "<a href=\"".$lnkdl[$lnd]."\">".$libelle."</a><br>\n";
 						};
 					if ($debug)
 						{
-						print $fh "[FOUND LINK ]".$dlbase.$lnkdl[$lnd]."\n" if $debug;
+						print $fh "[FOUND LINK ]".$lnkdl[$lnd]."\n" if $debug;
 						};
 					
 					if ($dbfile) 
 						{
 						savedbm();
-						print $fh "[DBM SAVE] ". $dlbase.$lnkdl[$lnd]."\n" if $debug;
+						print $fh "[DBM SAVE] ".$lnkdl[$lnd]."\n" if $debug;
 						};
 					$nbres++;
 					};
@@ -485,11 +487,11 @@ sub parse_vostfree{ #INTERNAL
 		}
 	else  
 		{
-		print $fh   "[DEBUG]   :  ".$nbres." links on distant web search \n" if ($debug);
+		print $fh   "[DEBUG]   :  ". $nbres ." links on distant web search \n" if ($debug);
 		print $fh   "[DEBUG] ending scan on $site  at : ".localtime()."\n" if ($debug);
 		if ($html)
 			{
-			print HTMLFILE  "<b>".$nbres." result(s)<b> for pattern <i>".$motif."</i> on http://vostfree.fr <br>\n";
+			print HTMLFILE  "<b>". $nbres ." result(s)<b> for pattern <i>".$motif."</i> on http://vostfree.fr <br>\n";
 			print HTMLFILE  " ending scan on $site  at : ".localtime()."<br><hr>\n";
 			};
 		};

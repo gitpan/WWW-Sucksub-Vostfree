@@ -1,6 +1,6 @@
 ---
 name: WWW-Sucksub-Vostfree
-version: 0.03
+version: 0.04
 author:
   - Timothée Foucart <timothee.foucart@apinc.org>
 abstract: ~
@@ -15,5 +15,5 @@ requires:
 provides:
   WWW::Sucksub::Vostfree:
     file: lib/WWW/Sucksub/Vostfree.pm
-    version: 0.03
+    version: 0.04
 generated_by: Module::Build version 0.2611
