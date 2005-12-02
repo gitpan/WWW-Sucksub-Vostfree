@@ -9,3 +9,6 @@ Revision history for WWW-Sucksub-Vostfree
 0.03	02/12/2005
 		* dbm file should store absolute url now
 		* POD corrections ( incorrect abstract + some english faults)
+0.04-0.05	02/12/2005
+		* warning should empeach serach when pattern search 
+		is less than 2 characters long.
