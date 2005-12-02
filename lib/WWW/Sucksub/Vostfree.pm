@@ -1,29 +1,29 @@
 package WWW::Sucksub::Vostfree;
 =head1 NAME
 
-WWW::Sucksub::Vostfree - automated access to divxstation.com
+WWW::Sucksub::Vostfree - automated access to vost.free.fr
 
 =head1 VERSION
 
-Version 0.02
+Version 0.03
 
 =cut
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 =head1 SYNOPSIS
 
 SuckSub::Vostfree is  a web robot based on the WWW::Mechanize Module
 This module search and collect distant result on the vostfree.fr web database.
 Subtitles Files urls and associated titles are stored in a dbm file.
-Distant and local subtitles search are possible. you can use local database thru simple html generated repport.
+Distant and local subtitles search are possible. you can use local database thru simple html generated report.
 
 
 
 	use WWW::Sucksub::Vostfree;
 	my $foo = WWW::Sucksub::Vostfree->new(
     					dbfile=> '/where/your/DBM/file is.db',
-					html =>'/where/your/html/repport/is.html',
+					html =>'/where/your/html/report/is.html',
 					motif=> 'the word(s) you search',
 					debug=> 1, 
 					logout => '/where/your/debug/info/are/written.log',
@@ -162,13 +162,13 @@ The file will should be readable/writable.
 Define simple html output where to write search report.
 you must provide au full path to the html file if you want to get an html output.
 
- 	$foo->html('/where/the html/repport/is/written.html')
+ 	$foo->html('/where/the html/report/is/written.html')
 
 If $foo->html() is defined. you can get the value of this attribute like this :
 
 	my $html_page = $foo->html()
 
-html file will be used for repport with search and searchdbm() methods.
+html file will be used for report with search and searchdbm() methods.
 
 
 =head1 METHODS and FUNCTIONS
@@ -177,7 +177,7 @@ these functions use the precedent attributes value.
 
 =head2 search() 
 
-this function takes no arguments.
+this function takes no argument.
 it alows to launch a local dbm search.
 
 	$foo-> search()
@@ -187,7 +187,7 @@ the motif() pattern.
 
 =head2 searchdbm() 
 
-this function takes no arguments.
+this function takes no argument.
 it alows to initiate the distant search on the web site vost.free.fr
 the local dbm file is automatically written. Results are accumulated to the dbm file
 you defined.
@@ -195,7 +195,7 @@ a search pattern must be define thru motif() method before launching search.
 
 =head2 get_all_result() 
 
-return a hash of every couple ( title, http link of subtitle file ) the search or update method returned.
+return a hash of every couple ( title, absolute http link of subtitle file ) the search or update method returned.
 
 	my %hash=$foo->get_all_result()
 
@@ -213,6 +213,8 @@ return a hash of every couple ( title, http link of subtitle file ) the search o
 =item * L<WWW::Sucksub::Attila>
 
 =item * L<WWW::Sucksub::Divxstation>
+
+=item * L<WWW::Sucksub::Frigo>
 
 =item * L<Alias>
 
@@ -450,20 +452,20 @@ sub parse_vostfree{ #INTERNAL
 				for (my $lnd=0;$lnd<=$#lnkdl;$lnd++)
 					{ 
 					$sstsav{$lnkdl[$lnd]} = $libelle;
-					if ($lnd>0){$libelle=$sstsav{$lnkdl[$lnd]}."_(".$lnd.")";};
+					if ($lnd>0){$libelle=$sstsav{$dlbase.$lnkdl[$lnd]}."_(".$lnd.")";};
 					if ($html)
 						{ 
 						print HTMLFILE  "<a href=\"".$dlbase.$lnkdl[$lnd]."\">".$libelle."</a><br>\n";
 						};
 					if ($debug)
 						{
-						print $fh "[FOUND LINK ]".$lnkdl[$lnd]."\n" if $debug;
+						print $fh "[FOUND LINK ]".$dlbase.$lnkdl[$lnd]."\n" if $debug;
 						};
 					
 					if ($dbfile) 
 						{
 						savedbm();
-						print $fh "[DBM SAVE] ". $lnkdl[$lnd]."\n" if $debug;
+						print $fh "[DBM SAVE] ". $dlbase.$lnkdl[$lnd]."\n" if $debug;
 						};
 					$nbres++;
 					};
